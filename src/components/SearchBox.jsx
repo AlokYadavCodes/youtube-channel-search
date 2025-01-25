@@ -28,6 +28,7 @@ function SearchBox() {
   const [keyword, setKeyword] = useState("");
   const [videos, setVideos] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleChannelClick = (channel) => {
     setQuery("");
@@ -67,6 +68,7 @@ function SearchBox() {
   };
 
   const fetchVideos = async () => {
+    setError(false);
     setVideos([]);
     if (!keyword) {
       return;
@@ -99,6 +101,7 @@ function SearchBox() {
         setVideos((prev) => [...prev, ...videos]);
       } catch (err) {
         console.log("Error in fetching videos", err);
+        setError(true);
       }
     }
     setSearching(false);
@@ -264,6 +267,10 @@ function SearchBox() {
               </div>
             </a>
           ))
+        ) : error === true ? (
+          <p className="text-red-500 text-center">
+            {videos?.length === 0 && "An Error Occurred! Try again"}
+          </p>
         ) : (
           <p className="text-gray-400 text-center">
             {videos?.length === 0 && "No videos found!"}
