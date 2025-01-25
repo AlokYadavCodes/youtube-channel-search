@@ -23,10 +23,6 @@ function SearchBox() {
       return;
     }
     setSelectedChannels((prev) => [...prev, channel]);
-    console.log(`channel are`);
-    console.log(channel);
-    console.log(`selectedChannels are: `);
-    console.log(selectedChannels);
   };
 
   const fetchChannel = async () => {
@@ -46,7 +42,6 @@ function SearchBox() {
           },
         },
       );
-      console.log(response.data.items);
       return response.data.items;
     } catch (error) {
       console.log("Error in fetching search results", error);
@@ -55,8 +50,6 @@ function SearchBox() {
 
   const fetchVideos = async () => {
     setVideos([]);
-    console.log("fetching videos");
-    console.log(selectedChannels);
     if (!keyword) {
       return;
     }
@@ -89,7 +82,6 @@ function SearchBox() {
         console.log("Error in fetching videos", err);
       }
     }
-    console.log(`videos are :`);
   };
 
   useEffect(() => {
@@ -100,7 +92,7 @@ function SearchBox() {
           setChannels(data);
         })
         .catch((err) => console.log(err));
-    }, 3000);
+    }, 1000);
     return () => clearTimeout(delayDebounceFn);
   }, [query]);
 
@@ -116,7 +108,11 @@ function SearchBox() {
       <input
         className="block m-auto mt-8 w-90 sm:w-[60%] h-12 rounded-lg outline-none bg-gray-800 text-gray-200 px-4 py-2 placeholder-gray-400"
         type="text"
-        placeholder="Enter channel name here ..."
+        placeholder={
+          selectedChannels.length > 0
+            ? "Add more channels..."
+            : "Enter channel name here ..."
+        }
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
@@ -151,10 +147,10 @@ function SearchBox() {
         </div>
       )}
 
-      <div className="relative">
+      <div className="relative w-90 sm:w-[60%] m-auto">
         <input
           disabled={selectedChannels.length === 0}
-          className={`peer block m-auto mt-4 w-90 sm:w-[60%] h-12 rounded-lg outline-none px-4 py-2 ${
+          className={`peer block m-auto mt-4 w-full h-12 rounded-lg outline-none px-4 py-2 ${
             selectedChannels
               ? "bg-gray-800 text-gray-200 placeholder-gray-400"
               : ""
@@ -209,7 +205,7 @@ function SearchBox() {
         Search Videos
       </button>
 
-      <div className="mx-1 my-8 px-2 py-4 bg-gray-800 rounded-xl shadow-lg">
+      <div className="mx-1 my-8 w-full md:flex md:flex-wrap md:gap-4 md:justify-center px-2 py-4 bg-gray-800 rounded-xl shadow-lg">
         {videos.length > 0 && (
           <div className="flex flex-col items-center justify-center w-full">
             <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-white text-2xl md:text-4xl font-semibold px-8 py-4 rounded-xl shadow-xl flex items-center space-x-3 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
@@ -225,15 +221,15 @@ function SearchBox() {
             <a
               href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
               key={video.id.videoId}
-              className="flex items-start px-2 py-3 my-4 bg-gray-700 hover:bg-gray-900 rounded-lg"
+              className="flex items-start md:flex-col md:w-64 md: px-2 py-3 my-4 bg-gray-700 hover:bg-gray-600 rounded-lg"
             >
               <img
-                className="w-64 h-20 rounded-lg object-cover mr-4"
-                src={video.snippet.thumbnails.default.url}
+                className="w-64 h-20 sm:w-80 sm:h-40 rounded-lg object-cover mr-4"
+                src={video.snippet.thumbnails.high.url}
                 alt="Video Thumbnail"
               />
               <div>
-                <p className="text-sm font-medium text-gray-200 hover:underline">
+                <p className="text-sm font-medium sm:text-lg md:mt-2 text-gray-200 hover:underline">
                   {video.snippet.title}
                 </p>
               </div>

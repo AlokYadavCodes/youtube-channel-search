@@ -11,7 +11,7 @@ function Header() {
         <a href="https://linkedin.com/in/alokyadavcodes" target="_blank">
           <FaLinkedin />
         </a>
-        <a href="">
+        <a href="https://github.com/AlokYadavCodes/youtube-channel-search">
           <FaGithub />
         </a>
         <a href="https://x.com/alokcodes" target="_blank">
