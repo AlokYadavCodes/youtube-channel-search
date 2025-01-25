@@ -221,7 +221,9 @@ function SearchBox() {
               <IoMdCheckmarkCircleOutline
                 style={{ fontSize: "40px", color: "white" }}
               />
-              <span className="font-bold">Found {videos.length} Videos</span>
+              <span className="font-bold">
+                Found {videos.length} {videos.length === 1 ? "Video" : "Videos"}
+              </span>
             </span>
           </div>
         )}
