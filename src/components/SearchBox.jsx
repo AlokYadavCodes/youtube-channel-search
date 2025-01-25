@@ -10,6 +10,7 @@ function SearchBox() {
   const [selectedChannels, setSelectedChannels] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [videos, setVideos] = useState([]);
+  const [searching, setSearching] = useState(false);
 
   const handleChannelClick = (channel) => {
     setQuery("");
@@ -53,6 +54,7 @@ function SearchBox() {
     if (!keyword) {
       return;
     }
+    setSearching(true);
     for (const channel of selectedChannels) {
       try {
         const response = await axios.get(
@@ -82,6 +84,7 @@ function SearchBox() {
         console.log("Error in fetching videos", err);
       }
     }
+    setSearching(false);
   };
 
   useEffect(() => {
@@ -205,6 +208,12 @@ function SearchBox() {
         Search Videos
       </button>
 
+      {searching && (
+        <div className="flex justify-center items-center mt-8">
+          <div className="border-gray-300 size-14 animate-spin rounded-full border-8 border-t-indigo-700" />
+        </div>
+      )}
+
       <div className="mx-1 my-8 w-full md:flex md:flex-wrap md:gap-4 md:justify-center px-2 py-4 bg-gray-800 rounded-xl shadow-lg">
         {videos.length > 0 && (
           <div className="flex flex-col items-center justify-center w-full">
@@ -216,6 +225,7 @@ function SearchBox() {
             </span>
           </div>
         )}
+
         {videos.length > 0 ? (
           videos.map((video) => (
             <a
