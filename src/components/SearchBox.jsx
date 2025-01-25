@@ -2,7 +2,24 @@ import { useEffect, useState } from "react";
 import { IoIosCloseCircle, IoMdCheckmarkCircleOutline } from "react-icons/io";
 import axios from "axios";
 
-const YOUTUBE_API_KEY = import.meta.env.VITE_API_KEY;
+const YOUTUBE_API_KEY1 = import.meta.env.VITE_API_KEY1;
+const YOUTUBE_API_KEY2 = import.meta.env.VITE_API_KEY2;
+const YOUTUBE_API_KEY3 = import.meta.env.VITE_API_KEY3;
+const YOUTUBE_API_KEY4 = import.meta.env.VITE_API_KEY4;
+const YOUTUBE_API_KEY5 = import.meta.env.VITE_API_KEY5;
+
+const apiKeys = [
+  YOUTUBE_API_KEY1,
+  YOUTUBE_API_KEY2,
+  YOUTUBE_API_KEY3,
+  YOUTUBE_API_KEY4,
+  YOUTUBE_API_KEY5,
+];
+
+const getRandomApiKey = () => {
+  const randomIndex = Math.floor(Math.random() * apiKeys.length);
+  return apiKeys[randomIndex];
+};
 
 function SearchBox() {
   const [query, setQuery] = useState("");
@@ -39,7 +56,7 @@ function SearchBox() {
             type: "channel",
             maxResults: 2,
             q: query,
-            key: YOUTUBE_API_KEY,
+            key: getRandomApiKey(),
           },
         },
       );
@@ -66,7 +83,7 @@ function SearchBox() {
               channelId: channel.id.channelId,
               q: keyword,
               maxResults: 50,
-              key: YOUTUBE_API_KEY,
+              key: getRandomApiKey(),
             },
           },
         );
