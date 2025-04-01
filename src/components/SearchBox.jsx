@@ -115,7 +115,7 @@ function SearchBox() {
           setChannels(data);
         })
         .catch((err) => console.log(err));
-    }, 1000);
+    }, 200);
     return () => clearTimeout(delayDebounceFn);
   }, [query]);
 
